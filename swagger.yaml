@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
-  title: Web API Skeleton
-  description: Skeleton for Dropwizard Web APIs
+  title: Blue Light Locations API
+  description: API for getting the locations of all the campus blue lights
   version: '0.0'
   license:
     name: GNU Affero General Public License Version 3
@@ -29,7 +29,19 @@ paths:
           description: Object containing information
           schema:
             $ref: '#/definitions/Info'
-
+  /blue-light-phones:
+    get:
+      summary: Get Blue Lights
+      description: Latitude and Longitude information of all the campus Blue Lights
+      responses:
+        200:
+          description: Response object containing Blue Light data
+          schema:
+            $ref: '#/definitions/ResultObject'
+        500:
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/Error'
 parameters:
   pretty:
     name: pretty
@@ -39,6 +51,28 @@ parameters:
     description: If true, JSON response will be pretty-printed
 
 definitions:
+  ResultObject:
+    properties:
+      id:
+        type: number
+        format: integer
+      type:
+        type: string
+      Attributes:
+        $ref: "#/definitions/Attributes"
+
+  Attributes:
+    type: array
+    items:
+      $ref: "#/definitions/ResourceObject"
+  ResourceObject:
+    properties:
+      latitude:
+        type: number
+        format: float
+      longitude:
+        type: number
+        format: float
   Info:
     properties:
       name:
