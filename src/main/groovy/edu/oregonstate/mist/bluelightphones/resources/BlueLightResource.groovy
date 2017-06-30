@@ -2,6 +2,7 @@ package edu.oregonstate.mist.bluelightphones.resources
 
 import com.codahale.metrics.annotation.Timed
 import edu.oregonstate.mist.api.Resource
+import edu.oregonstate.mist.api.jsonapi.ResultObject
 import edu.oregonstate.mist.bluelightphones.db.BlueLightDAO
 import groovy.transform.TypeChecked
 
@@ -28,6 +29,10 @@ class BlueLightResource extends Resource {
     @Timed
     @GET
     Response getBlueLights() {
-        ok(blueLightDAO.getBlueLightPhones()).build()
+        ResultObject resultObject = new ResultObject(
+                data: blueLightDAO.getBlueLightPhones()
+        )
+
+        ok(resultObject).build()
     }
 }
