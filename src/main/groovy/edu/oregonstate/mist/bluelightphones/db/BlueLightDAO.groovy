@@ -29,7 +29,6 @@ class BlueLightDAO {
         attributes.blueLightPhones = coordinates
 
         new ResourceObject(
-                id: 1,
                 type: "blueLightPhones",
                 attributes: attributes
         )
