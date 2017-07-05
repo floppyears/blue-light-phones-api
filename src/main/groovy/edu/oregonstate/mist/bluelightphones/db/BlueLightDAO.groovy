@@ -8,15 +8,36 @@ import groovy.json.JsonSlurper
 class BlueLightDAO {
 
     private File blueLightFile
-    private JsonSlurper jsonSlurper = new JsonSlurper()
 
     BlueLightDAO(String sourceJsonFile) {
         blueLightFile = new File(sourceJsonFile)
     }
 
     public ResourceObject getBlueLightPhones() {
+        getResourceObject()
+    }
+
+    private ResourceObject getResourceObject() {
+        JsonSlurper jsonSlurper = new JsonSlurper()
         def blueLightPhonesRaw = jsonSlurper.parseText(blueLightFile.getText())
+
+        Attributes attributes = getAttributes(blueLightPhonesRaw)
+
+        new ResourceObject(
+                type: "blueLightPhones",
+                attributes: attributes
+        )
+    }
+
+    private Attributes getAttributes(def blueLightPhonesRaw) {
         Attributes attributes = new Attributes()
+
+        attributes.blueLightPhones = getCoordinates(blueLightPhonesRaw)
+
+        attributes
+    }
+
+    private List<BlueLightPhoneCoordinates> getCoordinates(def blueLightPhonesRaw) {
         List<BlueLightPhoneCoordinates> coordinates = new ArrayList<BlueLightPhoneCoordinates>()
 
         blueLightPhonesRaw['features'].each {
@@ -26,12 +47,7 @@ class BlueLightDAO {
             ))
         }
 
-        attributes.blueLightPhones = coordinates
-
-        new ResourceObject(
-                type: "blueLightPhones",
-                attributes: attributes
-        )
+        coordinates
     }
 
 }
