@@ -14,13 +14,13 @@ class BlueLightDAO {
     }
 
     public ResourceObject getBlueLightPhones() {
-        getResourceObject()
-    }
-
-    private ResourceObject getResourceObject() {
         JsonSlurper jsonSlurper = new JsonSlurper()
         def blueLightPhonesRaw = jsonSlurper.parseText(blueLightFile.getText())
 
+        getResourceObject(blueLightPhonesRaw)
+    }
+
+    public ResourceObject getResourceObject(def blueLightPhonesRaw) {
         Attributes attributes = getAttributes(blueLightPhonesRaw)
 
         new ResourceObject(
@@ -31,7 +31,6 @@ class BlueLightDAO {
 
     private Attributes getAttributes(def blueLightPhonesRaw) {
         Attributes attributes = new Attributes()
-
         attributes.blueLightPhones = getCoordinates(blueLightPhonesRaw)
 
         attributes
@@ -39,7 +38,6 @@ class BlueLightDAO {
 
     private List<BlueLightPhoneCoordinates> getCoordinates(def blueLightPhonesRaw) {
         List<BlueLightPhoneCoordinates> coordinates = new ArrayList<BlueLightPhoneCoordinates>()
-
         blueLightPhonesRaw['features'].each {
             coordinates.add(new BlueLightPhoneCoordinates(
                     latitude: it['geometry']['coordinates'][1],
