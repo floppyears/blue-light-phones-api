@@ -1,6 +1,16 @@
-# Web API Skeleton
+# Blue Light Phones API
 
-Skeleton for Dropwizard Web APIs.
+API to return the locations of blue light phones on campus.
+
+### GET /blue-light-phones
+Get an array of coordinate pairs representing the locations of each blue light phone.
+
+## Setup Instructions
+
+This API uses a static JSON file as a data source.
+The json file should adhere to GEOJSON specifications and be placed in the
+root directory of this repository.
+Use the name `converted-coordinates.json` or anything that matches the name in configuration.yaml.
 
 ### Generate Keys
 
